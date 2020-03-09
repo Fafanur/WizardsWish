@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         _movement = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
+        Jump();
     }
     void FixedUpdate()
     {
@@ -24,5 +25,15 @@ public class PlayerMovement : MonoBehaviour
     public void MoveCharacter(Vector3 direction)
     {
         _rb.MovePosition(transform.position + (direction.normalized * movementSpeed * Time.deltaTime));
+    }
+
+    public void Jump()
+    {
+        Vector3 dwn = -transform.up;
+        Debug.DrawRay(transform.position, dwn * 10, Color.white);
+        if (Physics.Raycast(transform.position, dwn, 0.1f))
+        {
+            Debug.Log("I hit something");
+        }
     }
 }

@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float movementSpeed;
+    public float jumpForce;
+    public float raycastdis;
 
     private Rigidbody _rb;
     private Vector3 _movement;
+    public bool isGrounded;
 
     private void Awake()
     {
@@ -16,11 +19,20 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         _movement = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
-        Jump();
+        
     }
     void FixedUpdate()
     {
         MoveCharacter(_movement);
+        Jump();
+        
+        if (isGrounded)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _rb.velocity = Vector3.up * jumpForce;
+            }
+        }
     }
     public void MoveCharacter(Vector3 direction)
     {
@@ -30,10 +42,15 @@ public class PlayerMovement : MonoBehaviour
     public void Jump()
     {
         Vector3 dwn = -transform.up;
-        Debug.DrawRay(transform.position, dwn * 10, Color.white);
-        if (Physics.Raycast(transform.position, dwn, 0.1f))
+        Debug.DrawRay(transform.position, dwn * raycastdis, Color.white);
+        if (Physics.Raycast(transform.position, dwn, raycastdis))
         {
-            Debug.Log("I hit something");
+            isGrounded = true;
+
+        }
+        else
+        {
+            isGrounded = false;
         }
     }
 }

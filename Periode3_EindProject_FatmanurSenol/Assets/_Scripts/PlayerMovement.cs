@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody _rb;
     private Vector3 _movement;
-    public bool isGrounded;
 
     private void Awake()
     {
@@ -19,14 +18,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         _movement = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
-        
-    }
-    void FixedUpdate()
-    {
-        MoveCharacter(_movement);
-        Jump();
-        
-        if (isGrounded)
+
+        if (Physics.Raycast(transform.position, -transform.up, raycastdis))
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -34,23 +27,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    void FixedUpdate()
+    {
+        MoveCharacter(_movement);
+    }
     public void MoveCharacter(Vector3 direction)
     {
         _rb.MovePosition(transform.position + (direction.normalized * movementSpeed * Time.deltaTime));
-    }
-
-    public void Jump()
-    {
-        Vector3 dwn = -transform.up;
-        Debug.DrawRay(transform.position, dwn * raycastdis, Color.white);
-        if (Physics.Raycast(transform.position, dwn, raycastdis))
-        {
-            isGrounded = true;
-
-        }
-        else
-        {
-            isGrounded = false;
-        }
     }
 }

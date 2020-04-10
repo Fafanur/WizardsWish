@@ -13,6 +13,10 @@ public class PlayerBehaviour : MonoBehaviour
     public Transform spellSpawnLocation;
     public GameObject healingEffect;
 
+    public AudioSource sfxSource;
+    public AudioClip healingSFX;
+    public AudioClip[] attackSFXs;
+
     private Rigidbody _rb;
     private Vector3 _movement;
     private float nextFire;
@@ -51,6 +55,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnHealing(Health healthComp)
     {
+        sfxSource.PlayOneShot(healingSFX);
         CancelInvoke(nameof(EndHealing));
         healingEffect.SetActive(true);
         Invoke(nameof(EndHealing), 3f);
@@ -67,6 +72,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void CastSpell()
     {
+        sfxSource.PlayOneShot(attackSFXs[Random.Range(0, attackSFXs.Length)]);
         Vector3 spawnPos = spellSpawnLocation.transform.position;
         Vector3 rot = Camera.main.transform.rotation.eulerAngles;
         Instantiate(spell, spawnPos, Quaternion.Euler(rot));

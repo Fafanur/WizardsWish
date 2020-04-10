@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public delegate void StatusHandler();
+    public StatusHandler winEvent;
     public SpawnSystem spawnSystem;
     public SpawnData[] waves;
 
@@ -27,7 +29,10 @@ public class GameManager : MonoBehaviour
         }
         else 
         {
-            Debug.Log("U WON");
+            if (winEvent != null)
+            {
+                winEvent();
+            }
         }
     }
 

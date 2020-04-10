@@ -103,6 +103,7 @@ MonoBehaviour:
   regularCollider: {fileID: 58190175}
   agent: {fileID: 9198904014666939966}
   healthComp: {fileID: 7404359856948439868}
+  Item: {fileID: 6046785096626575329, guid: 6b0accade7dffd541aa4cf2651be57c6, type: 3}
   offset: 1
   attackDamage: 1
 --- !u!114 &7404359856948439868
@@ -146,8 +147,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.1772221, y: 1.8968694, z: 1.4253979}
-  m_Center: {x: 0.0120027065, y: 0.22021091, z: -0.16061115}
+  m_Size: {x: 0.7584734, y: 1.5796356, z: 0.7993889}
+  m_Center: {x: 0.0014281273, y: 0.06159401, z: 0.004350662}
 --- !u!65 &58190175
 BoxCollider:
   m_ObjectHideFlags: 0

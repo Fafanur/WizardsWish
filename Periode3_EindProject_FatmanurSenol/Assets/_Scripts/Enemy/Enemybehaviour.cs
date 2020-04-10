@@ -99,7 +99,8 @@ public class Enemybehaviour : MonoBehaviour
 
     private void DestroyMe()
     {
-        Destroy(gameObject);
+        SpawnItem();
+        Destroy(transform.parent.gameObject);
     }
     private void OnDestroy()
     {
@@ -109,7 +110,11 @@ public class Enemybehaviour : MonoBehaviour
 
     private void SpawnItem()
     {
-        
+        float dropChance = Random.Range(0f, 1f);
+        if (dropChance <= 0.20f)
+        {
+            Instantiate(Item, transform.position, Quaternion.identity);
+        }
     }
 
     private Vector3 GetTargetPosition()

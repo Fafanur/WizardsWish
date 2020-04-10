@@ -4815,7 +4815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 10
-  speed: 10
+  speed: 15
   spellParticle: {fileID: 7168659994420536179}
   destroyParticle: {fileID: 7104135041065088842, guid: fd543f5bf5776504abd8c6bd69da2767,
     type: 3}

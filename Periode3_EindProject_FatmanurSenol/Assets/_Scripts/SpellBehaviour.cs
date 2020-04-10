@@ -12,6 +12,8 @@ public class SpellBehaviour : MonoBehaviour
     public GameObject destroyParticle;
     public AudioSource audioSource;
     public AudioClip explosionSFX;
+
+    private bool hasHit = false;
     private void Update()
     {
         float moveSpeed = speed * Time.deltaTime;
@@ -19,7 +21,11 @@ public class SpellBehaviour : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        audioSource.PlayOneShot(explosionSFX);
+        if (!hasHit)
+        {
+            audioSource.PlayOneShot(explosionSFX, 0.5f);
+            hasHit = true;
+        }
         if (other.gameObject.tag != "Player")
         {
             Health healthComp = other.GetComponent<Health>();

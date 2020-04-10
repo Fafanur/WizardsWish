@@ -12,16 +12,16 @@ public class ObjectHolder : MonoBehaviour
 
     public float moveSpeed;
     public float rotationSpeed;
+
+    public Vector3 autoRotateSpeed;
     void FixedUpdate()
     {
         if (targetObject != null)
         {
             Vector3 targetPos = transform.position + offset.x * transform.right + (offset.y + (Mathf.Sin(Time.time * hoverSpeed) * hoverDistance)) * transform.up + offset.z * transform.forward;
-            Vector3 targetRot = transform.rotation.eulerAngles + offsetRot;
+            Vector3 targetRot = transform.rotation.eulerAngles + offsetRot + Time.time * autoRotateSpeed;
             targetObject.transform.position = Vector3.Lerp(targetObject.transform.position, targetPos, moveSpeed * Time.fixedDeltaTime);
             targetObject.transform.rotation = Quaternion.Lerp(targetObject.transform.rotation, Quaternion.Euler(targetRot), rotationSpeed * Time.fixedDeltaTime ); 
-            
         }
-        
     }
 }

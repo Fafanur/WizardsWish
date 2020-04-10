@@ -10,6 +10,8 @@ public class SpellBehaviour : MonoBehaviour
     
     public GameObject spellParticle;
     public GameObject destroyParticle;
+    public AudioSource audioSource;
+    public AudioClip explosionSFX;
     private void Update()
     {
         float moveSpeed = speed * Time.deltaTime;
@@ -17,16 +19,21 @@ public class SpellBehaviour : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        audioSource.PlayOneShot(explosionSFX);
         if (other.gameObject.tag != "Player")
         {
             Health healthComp = other.GetComponent<Health>();
             if (healthComp != null)
             {
                 healthComp.DoDamage(damageAmount);
-                Destroy(gameObject);
+                Invoke(nameof(DestroyMe), 0.5f);
             }
         }
-        Instantiate(destroyParticle, transform.position, Quaternion.identity);
-        spellParticle.SetActive(false);
+        Instantiate(destroyParticle, transform.position, Quaternion.identity, other.transform);
+    }
+
+    private void DestroyMe()
+    {
+        Destroy(gameObject);
     }
 }

@@ -29,6 +29,10 @@ public class Enemybehaviour : MonoBehaviour
     public Health healthComp;
     public GameObject Item;
 
+    public AudioSource audioSource;
+    public AudioClip enemyDeathSFX;
+    public AudioClip enemyAttackSFX;
+
     public float offset;
     public float attackDamage;
     private void Awake()
@@ -95,6 +99,7 @@ public class Enemybehaviour : MonoBehaviour
         rb.AddForce((-transform.forward + transform.up) * 5f, ForceMode.Impulse);
         rb.AddTorque((Vector3.right + Vector3.up) * 10f);
         Invoke(nameof(DestroyMe), 10f);
+        audioSource.PlayOneShot(enemyDeathSFX);
     }
 
     private void DestroyMe()
@@ -138,7 +143,7 @@ public class Enemybehaviour : MonoBehaviour
         {
             targetPosition.y = transform.position.y;
         }
-        transform.DOLookAt(target.transform.position, 1f, AxisConstraint.Y, Vector3.up);
+        transform.DOLookAt(target.transform.position, 1f, AxisConstraint.Y, Vector3.up).OnComplete(()=> { audioSource.PlayOneShot(enemyAttackSFX, 0.7f); });
         transform.DOMove(targetPosition, 2f).SetEase(Ease.OutBack).OnComplete(AttackAnimationEnd).SetDelay(1f);
     }
 

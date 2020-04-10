@@ -16,6 +16,10 @@ public class UI : MonoBehaviour
 
     public GameObject deathScreen;
     public GameObject winScreen;
+
+    public AudioSource audioSource;
+    public AudioClip winSFX;
+    public AudioClip loseSFX;
     private Vector3 healthX;
     void Start()
     {
@@ -54,6 +58,7 @@ public class UI : MonoBehaviour
 
     private void Death(Health healthComp)
     {
+        audioSource.PlayOneShot(loseSFX);
         deathScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
@@ -61,6 +66,7 @@ public class UI : MonoBehaviour
 
     private void Win()
     {
+        audioSource.PlayOneShot(winSFX);
         winScreen.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;

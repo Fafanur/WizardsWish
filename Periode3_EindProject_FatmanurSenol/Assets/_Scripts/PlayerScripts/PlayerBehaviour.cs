@@ -19,8 +19,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     private Rigidbody _rb;
     private Vector3 _movement;
-    private float nextFire;
     private Health myHealth;
+    private float counter;
 
     private void Awake()
     {
@@ -32,6 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void Update()
     {
+        counter += Time.deltaTime;
         _movement = transform.right * Input.GetAxis("Horizontal") + transform.forward * Input.GetAxis("Vertical");
 
         if (Physics.Raycast(transform.position, -transform.up, raycastdis))
@@ -42,11 +43,15 @@ public class PlayerBehaviour : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0) && Time.time > nextFire)
+        if(Cursor.lockState == CursorLockMode.Locked)
         {
-            nextFire = Time.time + fireRate;
-            CastSpell();
+            if (Input.GetMouseButton(0) && counter > fireRate)
+            {
+                counter = 0f;
+                CastSpell();
+            }
         }
+        
     }
     void FixedUpdate()
     {
@@ -55,7 +60,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnHealing(Health healthComp)
     {
-        sfxSource.PlayOneShot(healingSFX);
+        sfxSource.PlayOneShot(healingSFX, 0.7f);
         CancelInvoke(nameof(EndHealing));
         healingEffect.SetActive(true);
         Invoke(nameof(EndHealing), 3f);

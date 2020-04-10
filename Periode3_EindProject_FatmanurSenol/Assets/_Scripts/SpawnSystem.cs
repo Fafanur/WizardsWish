@@ -46,6 +46,7 @@ public class SpawnSystem : MonoBehaviour
 
     IEnumerator SpawnWave(SpawnData spawnData)
     {
+        yield return new WaitForSeconds(2f);
         for(int i = 0; i < spawnData.enemyAmount; i++)
         {
             SpawnSingleEnemy();

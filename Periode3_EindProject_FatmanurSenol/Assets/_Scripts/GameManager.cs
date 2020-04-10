@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public SpawnData[] waves;
 
     public int curWave = 0;
+    public AudioSource audioSource;
+    public AudioClip nextWaveSFX;
 
     private void Awake()
     {
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
         if (curWave < waves.Length)
         {
             spawnSystem.StartWave(waves[curWave]);
+            audioSource.PlayOneShot(nextWaveSFX, 1f);
         }
         else 
         {
@@ -36,8 +39,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(2f);
         spawnSystem.StartWave(waves[curWave]);
     }
 
